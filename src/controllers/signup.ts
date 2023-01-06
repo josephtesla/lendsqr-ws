@@ -1,10 +1,10 @@
 import { WrapperArguments } from "../helpers";
-import { userModel } from "../models";
+import { userRepository } from "../repositories";
 import { AuthService } from "../services";
 
 export const signup = async ({ input }: WrapperArguments) => {
   const { name, email, password } = input;
-  const authService = new AuthService(userModel);
+  const authService = new AuthService(userRepository);
   const { token, userId } = await authService.signUp({ 
     name, 
     email, 
