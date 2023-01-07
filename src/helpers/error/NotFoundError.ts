@@ -7,7 +7,7 @@ export class NotFoundError extends RequestError {
   _details = null
 
   constructor (message: string) {
-    message = message ?? "Not Found"
+    message = message ?? 'Not Found'
     super(message)
 
     this._message = message

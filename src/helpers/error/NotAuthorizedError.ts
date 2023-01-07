@@ -7,7 +7,7 @@ export class NotAuthorizedError extends RequestError {
   _details = null
 
   constructor (message: string) {
-    message = message ?? "Not authorized"
+    message = message ?? 'Not authorized'
     super(message)
 
     this._message = message

@@ -7,7 +7,7 @@ export class NotAuthenticatedError extends RequestError {
   _details = null
 
   constructor (message: string) {
-    message = message ?? "Not authenticated"
+    message = message ?? 'Not authenticated'
     super(message)
 
     this._message = message

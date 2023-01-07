@@ -1,6 +1,6 @@
-import { WrapperArguments } from "../helpers";
-import { userRepository } from "../repositories";
-import { AuthService } from "../services";
+import { WrapperArguments } from '../helpers'
+import { userRepository } from '../repositories'
+import { AuthService } from '../services'
 
 export const login = async ({ input }: WrapperArguments) => {
   const { email, password } = input

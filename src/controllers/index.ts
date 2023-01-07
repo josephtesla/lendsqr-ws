@@ -1,2 +1,6 @@
 export * from './login'
 export * from './signup'
+export * from './getAccount'
+export * from './createAccount'
+export * from './fundAccount'
+export * from './withdrawFromAccount'

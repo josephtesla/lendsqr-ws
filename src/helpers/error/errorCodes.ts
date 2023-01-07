@@ -3,7 +3,7 @@ export const ErrorCodes = Object.freeze({
   INVALID_INPUT: 'INVALID_INPUT',
   NOT_AUTHENTICATED: 'NOT_AUTHENTICATED',
   NOT_AUTHORIZED: 'NOT_AUTHORIZED',
-  NOT_FOUND: 'NOT_FOUND',
+  NOT_FOUND: 'NOT_FOUND'
 })
 
 export const FieldErrorCodes = Object.freeze({

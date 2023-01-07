@@ -1,26 +1,26 @@
-import { config } from "../config";
+import { config } from '../config'
 
 const environmentConfig = {
-  client: "mysql",
+  client: 'mysql',
   connection: {
     host: config.dbHost,
     port: config.dbPort,
     database: config.dbName,
     user: config.dbUser,
-    password: config.dbPass,
+    password: config.dbPass
   },
-  debug: ["development", "test"].includes(config.environment),
+  debug: ['development', 'test'].includes(config.environment),
   migrations: {
-    tableName: "_migrations",
-    directory: "./migrations",
-  },
-};
+    tableName: '_migrations',
+    directory: './migrations'
+  }
+}
 
 const knexConfigurations = {
   development: environmentConfig,
   test: environmentConfig,
   staging: environmentConfig,
-  production: environmentConfig,
-};
+  production: environmentConfig
+}
 
-export default knexConfigurations;
+export default knexConfigurations

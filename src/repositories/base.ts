@@ -1,32 +1,33 @@
-import { IModel } from "../models";
+import { Knex } from 'knex'
+import { IModel } from '../models'
 
 export class BaseRepository<T> {
-  readonly model: IModel<T>;
-  constructor(model: IModel<T>){
+  readonly model: IModel<T>
+  constructor (model: IModel<T>) {
     this.model = model
   }
 
-  async create(user: any){
-    return this.model.create(user);
+  async create (entry: any, trx?: Knex.Transaction) {
+    return await this.model.create(entry, { trx })
   }
 
-  async getAll(){
-    return this.model.findAll();
+  async getAll (filters: Partial<T>, trx?: Knex.Transaction) {
+    return await this.model.find(filters, { trx })
   }
 
-  async getOne(filters: Partial<T>) {
-    return this.model.find(filters)
+  async getOne (filters: Partial<T>, trx?: Knex.Transaction) {
+    return await this.model.findOne(filters, { trx })
   }
 
-  async getOneById(filters: Partial<T>){
-    return this.model.findOne(filters)
+  async getOneById (filters: Partial<T>, trx?: Knex.Transaction) {
+    return await this.model.findOne(filters, { trx })
   }
 
-  async updateOne(id: string, props: string){
-    return this.model.update(id, props)
+  async updateOne (id: string, props: any, trx?: Knex.Transaction) {
+    return await this.model.update(id, props, { trx })
   }
 
-  async deleteOne(id: string){
-    return this.model.delete(id)
+  async deleteOne (id: string, trx?: Knex.Transaction) {
+    return await this.model.delete(id, { trx })
   }
 }

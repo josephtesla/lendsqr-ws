@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
 
 dotenv.config()
-dotenv.config({ path: './../../.env'})
+dotenv.config({ path: './../../.env' })
 
 export const config = Object.freeze({
   environment: process.env.NODE_ENV as string,
@@ -13,5 +13,5 @@ export const config = Object.freeze({
   dbPort: Number(process.env.DB_PORT),
   dbName: process.env.DB_NAME,
   dbUser: process.env.DB_USER,
-  dbPass: process.env.DB_PASS,
-});
+  dbPass: process.env.DB_PASS
+})

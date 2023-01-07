@@ -1,35 +1,35 @@
-import { NextFunction, Request, Response } from "express";
-import { getTokenFromHeader } from "../helpers";
-import { AuthService } from "../services/AuthService";
-import { IUser } from "../types";
+import { NextFunction, Request, Response } from 'express'
+import { getTokenFromHeader } from '../helpers'
+import { AuthService } from '../services/auth'
+import { IUser } from '../types'
 
 export const currentUserMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.get("Authorization");
+  const authHeader = req.get('Authorization')
 
-  if (authHeader == null || authHeader === "") {
-    req.user = null;
-    return await next();
+  if (authHeader == null || authHeader === '') {
+    req.user = null
+    return next()
   }
 
-  const token = getTokenFromHeader(authHeader);
+  const token = getTokenFromHeader(authHeader)
 
-  let decodedToken;
+  let decodedToken
   try {
-    decodedToken = AuthService.verifyAuthToken(token);
+    decodedToken = AuthService.verifyAuthToken(token)
   } catch (err) {
-    req.user = null;
-    return await next();
+    req.user = null
+    return next()
   }
 
-  const user: IUser = decodedToken.user;
+  const user: IUser = decodedToken.user
   if (user == null) {
-    throw new Error("Invalid token payload. " + "Token must contain current user details");
+    throw new Error('Invalid token payload. ' + 'Token must contain current user details')
   }
 
-  req.user = user;
-  return await next();
-};
+  req.user = user
+  return next()
+}

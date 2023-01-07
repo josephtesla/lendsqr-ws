@@ -1,17 +1,23 @@
 import { Knex } from "knex";
-import { TableNames, TransactionStatus, TransactionType } from "../../constants";
+import {
+  TableNames,
+  TransactionStatus,
+  TransactionType,
+} from "../../constants";
 
-const { USERS, WALLETS, TRANSACTIONS } = TableNames
+const { USERS, WALLETS, TRANSACTIONS } = TableNames;
 
 export async function up(db: Knex): Promise<void> {
   await db.schema.createTable(TRANSACTIONS, (table) => {
-
     // primary key
     table.increments("id").primary().unsigned();
     table.uuid("_uuid").defaultTo(db.raw("(UUID())"));
 
-    table.enum('type', Object.values(TransactionType));
-    table.enum("status", Object.values(TransactionStatus))
+    table.enum("type", Object.values(TransactionType)).notNullable();
+    table
+      .enum("status", Object.values(TransactionStatus))
+      .notNullable()
+      .defaultTo(TransactionStatus.PENDING);
     table.decimal("amount", 15, 2).notNullable().checkPositive();
 
     // Transfer type
@@ -30,7 +36,7 @@ export async function up(db: Knex): Promise<void> {
 
     // Withdraw
     table.string("bankName", 255);
-    table.string("bankAccountNumber", 20).checkLength('=', 10);
+    table.string("bankAccountNumber", 20).checkLength("=", 10);
     table.string("bankAccountName", 255);
 
     table
