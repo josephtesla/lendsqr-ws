@@ -35,10 +35,17 @@ export class Model<T extends IBaseEntryType> implements IModel<T> {
 
   async create(entry: any) {
     delete entry.id;
-    const result = await this.knex
+    let result = await this.knex
       .insert(entry, this.selectableProps)
       .into(this.tableName)
       .timeout(Model.timeout);
+
+    const insertId = result[0];
+    result = await this.knex
+    .select(this.selectableProps)
+    .from(this.tableName)
+    .where({ id: insertId })
+    .timeout(Model.timeout);
 
     return result[0]
   }
