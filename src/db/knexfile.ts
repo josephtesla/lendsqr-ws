@@ -9,7 +9,7 @@ const environmentConfig = {
     user: config.dbUser,
     password: config.dbPass
   },
-  debug: ['development', 'test'].includes(config.environment),
+  debug: ['development'].includes(config.environment),
   migrations: {
     tableName: '_migrations',
     directory: './migrations'
