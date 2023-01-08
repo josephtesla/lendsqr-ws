@@ -1,7 +1,7 @@
 import { Knex } from 'knex'
-import { IModel } from '../models'
+import { IBaseEntryType, IModel } from '../models'
 
-export class BaseRepository<T> {
+export class BaseRepository<T extends IBaseEntryType> {
   readonly model: IModel<T>
   constructor (model: IModel<T>) {
     this.model = model
@@ -19,8 +19,8 @@ export class BaseRepository<T> {
     return await this.model.findOne(filters, { trx })
   }
 
-  async getOneById (filters: Partial<T>, trx?: Knex.Transaction) {
-    return await this.model.findOne(filters, { trx })
+  async getOneById (id: string, trx?: Knex.Transaction) {
+    return await this.model.findById(id, { trx })
   }
 
   async updateOne (id: string, props: any, trx?: Knex.Transaction) {

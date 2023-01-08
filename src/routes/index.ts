@@ -3,14 +3,17 @@ import {
   createAccount,
   fundAccount,
   getAccount,
+  getTransactions,
   login,
   signup,
+  transferToAccount,
   withdrawFromAccount,
 } from "../controllers";
 import {
   fundAccountSchemas,
   loginSchemas,
   signUpSchemas,
+  transferToAccountSchemas,
   withdrawFromAccountSchemas,
 } from "../validationSchemas";
 
@@ -30,12 +33,15 @@ router
   .get(wrapController(getAccount));
 
 router.post("/wallet/fund", wrapController(fundAccount, fundAccountSchemas));
-router.post("/wallet/transfer", wrapController(login, loginSchemas));
+router.post(
+  "/wallet/transfer",
+  wrapController(transferToAccount, transferToAccountSchemas)
+);
 router.post(
   "/wallet/withdraw",
   wrapController(withdrawFromAccount, withdrawFromAccountSchemas)
 );
 
-router.get("/transactions", wrapController(login, loginSchemas));
+router.get("/transactions", wrapController(getTransactions));
 
 export default router;

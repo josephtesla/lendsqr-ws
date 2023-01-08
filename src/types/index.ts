@@ -40,6 +40,12 @@ export interface ITransaction {
   updatedAt: string
 }
 
+export interface IBankAccountInfo {
+  bankName: string
+  bankAccountName: string
+  bankAccountNumber: string
+}
+
 export interface ILoginInput {
   email: string
   password: string

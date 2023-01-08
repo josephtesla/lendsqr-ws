@@ -1,4 +1,5 @@
 import { logger } from "../logger";
+import { IBankAccountInfo } from "../types";
 
 export class PaymentService {
 
@@ -16,7 +17,7 @@ export class PaymentService {
   static async withdrawToBank(
     walletId: string,
     amount: number,
-    bankDetails: any
+    bankDetails: IBankAccountInfo
   ) {
     return await new Promise((resolve, reject) => {
       setTimeout(() => {

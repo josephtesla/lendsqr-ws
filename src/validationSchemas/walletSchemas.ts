@@ -16,3 +16,10 @@ export const withdrawFromAccountSchemas = {
     }).required()
   })
 }
+
+export const transferToAccountSchemas = {
+  inputSchema: Joi.object().keys({
+    amount: Joi.number().min(0).required(),
+    toWalletId: Joi.string().required()
+  })
+}

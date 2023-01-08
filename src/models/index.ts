@@ -1,22 +1,23 @@
 import { Knex } from 'knex'
 
-export interface IModel<T> {
+export interface IBaseEntryType {
+  id?: string;
+}
+export interface IModel<T extends IBaseEntryType> {
   create: (entry: any, options?: IQueryOptions) => Promise<any>
   findAll: (options?: IQueryOptions) => Promise<any>
   find: (filters: Partial<T>, options?: IQueryOptions) => Promise<any>
   findOne: (filters: Partial<T>, options?: IQueryOptions) => null | Promise<any>
+  findById: (id: string, options?: IQueryOptions) => null | Promise<any>
   update: (id: string, props: any, options?: IQueryOptions) => Promise<any>
   delete: (id: string, options?: IQueryOptions) => Promise<any>
+  getKnex: () => Knex<T>
 }
 
 interface IModelProps {
   knexConn: Knex
   tableName: string
   selectableProps?: string[]
-}
-
-interface IBaseEntryType {
-  id?: string
 }
 
 export interface IQueryOptions {
@@ -107,6 +108,23 @@ export class Model<T extends IBaseEntryType> implements IModel<T> {
     return rows[0]
   }
 
+  async findById (id: string, { trx }: IQueryOptions = {}) {
+    const rows = await withTransaction(
+      this.knex
+        .select(this.selectableProps)
+        .from(this.tableName)
+        .where({ id })
+        .timeout(Model.timeout),
+      trx
+    )
+
+    if (rows.length === 0) {
+      return null
+    }
+
+    return rows[0]
+  }
+
   async update (id: string, props: any, { trx }: IQueryOptions = {}) {
     delete props.id
     const queryBd = this.knex
@@ -123,5 +141,9 @@ export class Model<T extends IBaseEntryType> implements IModel<T> {
       this.knex.del().from(this.tableName).where({ id }).timeout(Model.timeout),
       trx
     )
+  }
+
+  getKnex(): Knex<T> {
+    return this.knex;
   }
 }
